@@ -17,6 +17,11 @@ export default {
   line-height: 44px;
   text-align: center;
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 .left,
 .right {

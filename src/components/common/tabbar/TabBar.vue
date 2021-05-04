@@ -19,6 +19,7 @@ export default {
   width: 100%;
   height: 49px;
   background: #f6f6f6;
-  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -1px 1px 1px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
 }
 </style>
