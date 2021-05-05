@@ -29,11 +29,18 @@ export default {
     };
   },
   methods: {
+    // 回到某个位置
     scrollTo(x, y, time = 300) {
-      this.scroll.scrollTo(0, 0, time);
+      this.scroll && this.scroll.scrollTo(0, 0, time);
     },
+    //刷新下拉操作
     finishPullUp() {
       this.scroll.finishPullUp();
+    },
+    // 刷新获取可滑动区域
+    refresh() {
+      console.log(1);
+      this.scroll.refresh();
     },
   },
   mounted() {
@@ -43,22 +50,19 @@ export default {
       observeDOM: true,
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
-      // 弹跳
-      bounce: {
-        top: true,
-        bottom: true,
-        left: true,
-        right: true,
-      },
     });
     // 获取当前滚动位置
-    this.scroll.on("scroll", (position) => {
-      this.$emit("position", position);
-    });
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on("scroll", (position) => {
+        this.$emit("position", position);
+      });
+    }
     // 下拉加载数据
-    this.scroll.on("pullingUp", () => {
-      this.$emit("loadmore");
-    });
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("loadmore");
+      });
+    }
   },
 };
 </script>

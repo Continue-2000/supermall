@@ -1,14 +1,12 @@
 <template>
-  <div class="goods-list-item">
-    <a :href="good.link" class="good-item">
-      <img :src="good.show.img" alt="" @load="imageload" />
-      <div class="good-info">
-        <p class="title">{{ good.title }}</p>
-        <p class="collect">商品已被{{ good.cfav }}收藏</p>
-        <span class="price">￥{{ good.price }}</span>
-        <span class="sale">{{ good.sale }}人付款</span>
-      </div>
-    </a>
+  <div class="goods-list-item" @click="getDetail">
+    <img :src="good.show.img" alt="" @load="imageload" />
+    <div class="good-info">
+      <p class="title">{{ good.title }}</p>
+      <p class="collect">商品已被{{ good.cfav }}收藏</p>
+      <span class="price">￥{{ good.price }}</span>
+      <span class="sale">{{ good.sale }}人付款</span>
+    </div>
   </div>
 </template>
 <script>
@@ -26,6 +24,9 @@ export default {
     imageload() {
       this.$bus.$emit("imageHaveLoad");
     },
+    getDetail() {
+      this.$router.push("/detail/" + this.good.iid);
+    },
   },
 };
 </script>
@@ -36,11 +37,8 @@ export default {
   background-color: #fff;
   padding-bottom: 0;
 }
-.good-item {
-  display: block;
-  border-radius: 5px;
-}
-.good-item img {
+
+.goods-list-item img {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   overflow: hidden;

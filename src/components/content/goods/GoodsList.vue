@@ -24,7 +24,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: #eee;
   padding: 10px 0;
 }
 .good-item {
