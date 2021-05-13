@@ -34,7 +34,7 @@ const routes = [
 ]
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  // mode: 'history'
 })
 // 3.暴露路由
 export default router;

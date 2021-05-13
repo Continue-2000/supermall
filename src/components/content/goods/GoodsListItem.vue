@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item" @click="getDetail">
-    <img :src="good.show.img" alt="" @load="imageload" />
+    <img :src="showImg" alt="" @load="imageload" />
     <div class="good-info">
       <p class="title">{{ good.title }}</p>
       <p class="collect">商品已被{{ good.cfav }}收藏</p>
@@ -18,6 +18,11 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  computed: {
+    showImg() {
+      return this.good.image || this.good.show.img;
     },
   },
   methods: {

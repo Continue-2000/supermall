@@ -8,6 +8,13 @@ export function getDetail(id) {
   })
 }
 
+// 获取推荐
+export function Recommend() {
+  return request({
+    url: '/recommend'
+  })
+}
+
 export class Good {
   constructor(columns, itemInfo, services) {
     this.columns = columns;
@@ -42,3 +49,5 @@ export class Comment {
     this.list = list
   }
 }
+
+

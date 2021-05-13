@@ -8,6 +8,7 @@
       <detail-goods-info :detailInfo="detailInfo"></detail-goods-info>
       <detail-param-info :paramInfo="goodParam"></detail-param-info>
       <detail-comment :comments="comment"></detail-comment>
+      <goods-list :goods="recommend" />
     </scroll>
   </div>
 </template>
@@ -20,11 +21,19 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailComment from "./childComps/DetailComment";
+import GoodsList from "components/content/goods/GoodsList";
 // 公用组件
 import Scroll from "components/common/scroll/Scroll";
 
 // 网络请求
-import { getDetail, Good, ShopInfo, GoodParam, Comment } from "network/detail";
+import {
+  getDetail,
+  Recommend,
+  Good,
+  ShopInfo,
+  GoodParam,
+  Comment,
+} from "network/detail";
 
 export default {
   name: "detail",
@@ -37,6 +46,7 @@ export default {
       detailInfo: {},
       goodParam: {},
       comment: {},
+      recommend: [],
     };
   },
   components: {
@@ -48,12 +58,17 @@ export default {
     DetailParamInfo,
     DetailComment,
     Scroll,
+    GoodsList,
   },
   created() {
     // 获取id
     this.id = this.$route.params.id;
     //  获取详情信息
     this.getDetail(this.id);
+    // 获取推荐信息
+    Recommend().then((res) => {
+      this.recommend = res.data.list;
+    });
   },
   methods: {
     getDetail(id) {
@@ -78,11 +93,7 @@ export default {
         );
         // 获取comment
         let commentData = data.rate.list;
-        this.comment = new Comment(
-          commentData,
-          commentData.images,
-          commentData.user
-        );
+        this.comment = new Comment(commentData);
       });
     },
   },

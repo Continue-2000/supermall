@@ -3,12 +3,15 @@
     <div v-for="item in list" class="comment-item">
       <div class="user">
         <div>
+          <div class="title">用户评价</div>
           <div class="userimg">
             <img :src="item.user.avatar" alt="" />
           </div>
           <div class="userinfo">
             <div class="username">{{ item.user.uname }}</div>
-            <div class="time-style">{{ item.created }}{{ item.style }}</div>
+            <div class="time-style">
+              {{ item.created | showDate }}{{ item.style }}
+            </div>
           </div>
         </div>
       </div>
@@ -20,6 +23,7 @@
   </div>
 </template>
 <script>
+import { getDate } from "common/utils";
 export default {
   name: "",
   props: {
@@ -38,6 +42,12 @@ export default {
       return Date.vauleof(this.list.created);
     },
   },
+  filters: {
+    showDate(value) {
+      const date = new Date(value * 1000);
+      return getDate(date, "yyyy-MM-dd ");
+    },
+  },
 };
 </script>
 <style scoped>
@@ -46,6 +56,11 @@ export default {
 }
 .comment-item {
   padding: 20px;
+}
+.title {
+  margin: 10px 0 40px 15px;
+  color: #333;
+  font-size: 15px;
 }
 .user {
   height: 40px;
@@ -71,15 +86,15 @@ export default {
   color: #ccc;
 }
 .maincontent {
-  margin-top: 10px;
+  margin-top: 70px;
   font-size: 14px;
   text-align: left;
 }
 .images {
   display: flex;
-
   flex-wrap: wrap;
 }
+
 .images img {
   width: 48%;
   padding: 10px 10px 10px 0;
