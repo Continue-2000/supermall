@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  name: "recommendView",
+  name: "RecommendView",
   props: {
     recommends: {
       type: Array,

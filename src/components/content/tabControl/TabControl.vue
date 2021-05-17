@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  name: "",
+  name: "TabControl",
   props: {
     items: {
       type: Array,

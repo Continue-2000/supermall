@@ -8,7 +8,7 @@
 <script>
 import BScroll from "better-scroll";
 export default {
-  name: "",
+  name: "Scroll",
   props: {
     probeType: {
       type: Number,
@@ -31,7 +31,7 @@ export default {
   methods: {
     // 回到某个位置
     scrollTo(x, y, time = 300) {
-      this.scroll && this.scroll.scrollTo(0, 0, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
     },
     //刷新下拉操作
     finishPullUp() {
@@ -39,7 +39,7 @@ export default {
     },
     // 刷新获取可滑动区域
     refresh() {
-      console.log(1);
+      // console.log("have refresh");
       this.scroll.refresh();
     },
   },
@@ -55,6 +55,7 @@ export default {
     if (this.probeType === 2 || this.probeType === 3) {
       this.scroll.on("scroll", (position) => {
         this.$emit("position", position);
+        // console.log(position);
       });
     }
     // 下拉加载数据

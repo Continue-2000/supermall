@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: "",
+  name: "FeatureView",
 };
 </script>
 <style scoped>

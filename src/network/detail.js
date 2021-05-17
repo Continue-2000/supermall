@@ -21,7 +21,7 @@ export class Good {
     this.title = itemInfo.title;
     this.desc = itemInfo.desc;
     this.price = itemInfo.price;
-    this.oldPrice = itemInfo.oldPrice
+    this.oldPrice = itemInfo.oldPrice;
     this.discount = itemInfo.discountDesc;
     this.lowNowPrice = itemInfo.lowNowPrice
     this.services = services;

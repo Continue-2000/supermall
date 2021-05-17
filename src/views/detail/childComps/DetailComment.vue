@@ -1,23 +1,26 @@
 <template>
-  <div class="comment" v-if="Object.keys(comments).length !== 0">
-    <div v-for="item in list" class="comment-item">
-      <div class="user">
-        <div>
-          <div class="title">用户评价</div>
-          <div class="userimg">
-            <img :src="item.user.avatar" alt="" />
-          </div>
-          <div class="userinfo">
-            <div class="username">{{ item.user.uname }}</div>
-            <div class="time-style">
-              {{ item.created | showDate }}{{ item.style }}
+  <div class="comment">
+    <p v-if="!iscomment" class="nocomment">暂无评价</p>
+    <div v-if="iscomment">
+      <div v-for="item in list" class="comment-item">
+        <div class="user">
+          <div>
+            <div class="title">用户评价</div>
+            <div class="userimg">
+              <img :src="item.user.avatar" alt="" />
+            </div>
+            <div class="userinfo">
+              <div class="username">{{ item.user.uname }}</div>
+              <div class="time-style">
+                {{ item.created | showDate }}{{ item.style }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <p class="maincontent">{{ item.content }}</p>
-      <div class="images">
-        <img v-for="image in item.images" :src="image" alt="" />
+        <p class="maincontent">{{ item.content }}</p>
+        <div class="images">
+          <img v-for="image in item.images" :src="image" alt="" />
+        </div>
       </div>
     </div>
   </div>
@@ -25,7 +28,7 @@
 <script>
 import { getDate } from "common/utils";
 export default {
-  name: "",
+  name: "DetailComment",
   props: {
     comments: {
       type: Object,
@@ -41,6 +44,9 @@ export default {
     date() {
       return Date.vauleof(this.list.created);
     },
+    iscomment() {
+      return this.comments.list ? true : false;
+    },
   },
   filters: {
     showDate(value) {
@@ -53,6 +59,11 @@ export default {
 <style scoped>
 .comment {
   padding: 20px 0;
+}
+.nocomment {
+  margin-left: 10px;
+  font-size: 15px;
+  color: #333;
 }
 .comment-item {
   padding: 20px;

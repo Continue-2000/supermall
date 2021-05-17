@@ -12,6 +12,7 @@
         :key="index"
         :src="item"
         alt=""
+        @load="ImageLoad"
       />
     </div>
   </div>
@@ -33,6 +34,11 @@ export default {
       counter: 0,
       imagesLength: 0,
     };
+  },
+  methods: {
+    ImageLoad() {
+      this.$bus.$emit("detailImageLoad");
+    },
   },
 };
 </script>

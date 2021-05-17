@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "goodsListItem",
+  name: "GoodsListItem",
   props: {
     good: {
       type: Object,
@@ -30,7 +30,11 @@ export default {
       this.$bus.$emit("imageHaveLoad");
     },
     getDetail() {
-      this.$router.push("/detail/" + this.good.iid);
+      let goid;
+      if (this.$route.path.includes("/home")) goid = this.good.iid;
+      else if (this.$route.path.includes("/detail")) goid = this.good.shop_id;
+      console.log(goid);
+      this.$router.push("/detail/" + goid);
     },
   },
 };

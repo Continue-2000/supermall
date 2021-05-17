@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: "",
+  name: "NavBar",
 };
 </script>
 <style scoped>
