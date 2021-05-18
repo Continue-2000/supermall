@@ -33,7 +33,7 @@ export default {
   left: 0;
   right: 0;
   top: 44px;
-  bottom: 58px;
+  bottom: 99px;
 }
 .contain {
   height: 100%;

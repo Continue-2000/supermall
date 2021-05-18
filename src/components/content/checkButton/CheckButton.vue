@@ -6,15 +6,27 @@
 <script>
 export default {
   name: "CheckButton",
+  props: {
+    cart: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
-      ischeck: true,
+      ischeck: false,
     };
   },
   methods: {
     change() {
       this.ischeck = !this.ischeck;
+      this.cart.checked = this.ischeck;
     },
+  },
+  created() {
+    this.ischeck;
   },
 };
 </script>

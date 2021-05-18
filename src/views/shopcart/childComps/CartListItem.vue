@@ -1,6 +1,6 @@
 <template>
   <div class="cart-list-item">
-    <check-button class="check-button" />
+    <check-button class="check-button" :cart="cart" />
     <div class="image">
       <div class="img">
         <img :src="cart.img" alt="产品图片" />
