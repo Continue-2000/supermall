@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item" @click="getDetail">
-    <img :src="showImg" alt="" @load="imageload" />
+    <img v-lazy="showImg" alt="" @load="imageload" />
     <div class="good-info">
       <p class="title">{{ good.title }}</p>
       <p class="collect">商品已被{{ good.cfav }}收藏</p>
@@ -34,6 +34,7 @@ export default {
       if (this.$route.path.includes("/home")) goid = this.good.iid;
       else if (this.$route.path.includes("/detail")) goid = this.good.shop_id;
       console.log(goid);
+      // this.$router.push("/detail/" + goid);
       this.$router.push("/detail/" + goid);
     },
   },

@@ -7,7 +7,8 @@ import getters from './getters'
 Vue.use(Vuex);
 // 2.实例化仓库
 const state = {
-  shopcart: []
+  shopcart: [],
+  clickname: '正在流行'
 }
 const store = new Vuex.Store({
   state,

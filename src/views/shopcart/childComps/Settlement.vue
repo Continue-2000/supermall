@@ -1,12 +1,12 @@
 <template>
   <div class="settlement">
-    <div class="selectAll">
-      <check-button class="check-button" @click="selectAll" />
+    <div class="selectAll" @click="selectAll">
+      <check-button class="check-button" :ischeck="isAll" />
       <span>全选</span>
     </div>
     <div class="total">
       <span class="totalPrice">合计: {{ total }}</span>
-      <div class="toSettle">
+      <div class="toSettle" @click="accounts">
         结算<span v-show="totalNum">({{ totalNum }})</span>
       </div>
     </div>
@@ -20,37 +20,70 @@ import { mapGetters } from "vuex";
 export default {
   name: "Settlement",
   data() {
-    return {};
+    return {
+      isSelectAll: false,
+    };
   },
   components: { CheckButton },
   created() {
     console.log(this.total);
   },
   computed: {
+    ...mapGetters({
+      allCart: "allCart",
+    }),
     //计算总价
     total() {
       return (
         "￥" +
-        this.$store.state.shopcart
+        this.allCart
           .filter((item) => {
             return item.checked;
           })
           .reduce((pre, cur) => {
             return pre + cur.price * cur.count;
           }, 0)
+          .toFixed(2)
       );
     },
     //计算总数量
     totalNum() {
-      return this.$store.state.shopcart.filter((item) => {
+      return this.allCart.filter((item) => {
         return item.checked;
       }).length;
     },
+    // 是否全选
+    isAll: {
+      get() {
+        return (
+          !this.allCart.length == 0 &&
+          !this.allCart.some((item) => item.checked == false)
+        );
+      },
+      set() {},
+    },
   },
   methods: {
-    //全选
+    // 1.全选
     selectAll() {
-      this.$store.state.shopcart.map((item) => (item.checked = true));
+      this.isAll = !this.isAll;
+      console.log(1);
+
+      if (this.isAll) {
+        for (let o of this.allCart) {
+          this.$store.dispatch("ischeck", o);
+        }
+      } else if (!this.isAll)
+        for (let o of this.allCart) {
+          if (!o.checked) {
+            this.$store.dispatch("ischeck", o);
+          }
+        }
+    },
+    // 2.结算
+    accounts() {
+      if (this.totalNum == 0) this.$toast.error("你还没有选择宝贝哦", 2500);
+      else this.$toast.error("努力开发中", 2500);
     },
   },
 };
@@ -71,8 +104,8 @@ export default {
 }
 .selectAll {
   display: flex;
-  flex: 1;
   align-items: center;
+  width: 80px;
   height: 40px;
 }
 .total {
@@ -86,7 +119,7 @@ export default {
 }
 .totalPrice {
   flex: 1;
-  margin-left: 20px;
+  margin-left: 100px;
 }
 .toSettle {
   height: 40px;

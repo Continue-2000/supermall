@@ -6,5 +6,9 @@ export default {
   // 2.返回购物车所有内容
   allCart(state) {
     return state.shopcart
+  },
+  // 3.返回分类选中的item
+  clickName(state) {
+    return state.clickname
   }
 }

@@ -3,6 +3,7 @@
     <nav-bar class="nav-bar">
       <div slot="center">购物车({{ cartLength }})</div>
     </nav-bar>
+    <empty v-if="!cartLength" />
     <cart-list></cart-list>
     <settlement />
   </div>
@@ -11,12 +12,13 @@
 // 子组件
 import CartList from "./childComps/CartList";
 import Settlement from "./childComps/Settlement";
+import Empty from "./childComps/Empty";
 // 公用组件
 import NavBar from "components/common/navbar/NavBar";
 import { mapGetters } from "vuex";
 export default {
   name: "Shopcart",
-  components: { NavBar, CartList, Settlement },
+  components: { NavBar, CartList, Settlement, Empty },
   computed: {
     ...mapGetters({
       cartLength: "cartLength",

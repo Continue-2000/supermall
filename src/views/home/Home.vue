@@ -126,7 +126,7 @@ export default {
       getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
-        // console.log(res);
+        console.log(res);
       });
     },
     getHomeGoods(type) {
@@ -138,8 +138,6 @@ export default {
     },
   },
   activated() {
-    // console.log(this.position);
-    // console.log("act");
     this.$refs.scroll.scrollTo(0, -this.position);
     this.$refs.scroll.refresh();
   },

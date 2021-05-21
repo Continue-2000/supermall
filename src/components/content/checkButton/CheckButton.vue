@@ -7,6 +7,12 @@
 export default {
   name: "CheckButton",
   props: {
+    ischeck: {
+      type: Boolean,
+      default() {
+        return false;
+      },
+    },
     cart: {
       type: Object,
       default() {
@@ -14,19 +20,11 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      ischeck: false,
-    };
-  },
   methods: {
     change() {
-      this.ischeck = !this.ischeck;
-      this.cart.checked = this.ischeck;
+      this.ischecked = !this.ischecked;
+      this.$store.dispatch("ischeck", this.cart);
     },
-  },
-  created() {
-    this.ischeck;
   },
 };
 </script>

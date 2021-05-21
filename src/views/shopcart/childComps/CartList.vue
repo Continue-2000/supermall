@@ -1,7 +1,11 @@
 <template>
   <div class="cart-list">
     <scroll class="contain" ref="scroll">
-      <cart-list-item v-for="cart in allCart" :cart="cart"></cart-list-item>
+      <cart-list-item
+        v-for="cart in allCart"
+        :key="cart.id"
+        :cart="cart"
+      ></cart-list-item>
     </scroll>
   </div>
 </template>

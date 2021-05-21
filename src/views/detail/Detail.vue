@@ -36,8 +36,10 @@ import DetailButtomBar from "./childComps/DetailButtomBar";
 // 公用组件
 import Scroll from "components/common/scroll/Scroll";
 import { debounce } from "common/utils";
-// import BackTop from "components/common/backtop/BackTop";
 import { BackTopMixin } from "common/mixin";
+
+// 映射
+import { mapActions } from "vuex";
 // 网络请求
 import {
   getDetail,
@@ -93,6 +95,9 @@ export default {
     });
   },
   methods: {
+    ...mapActions({
+      addCart: "addShopCart",
+    }),
     getDetail(id) {
       getDetail(id).then((res) => {
         console.log(res);
@@ -152,9 +157,10 @@ export default {
       Product.desc = this.goodInfo.desc;
       Product.price = this.goodInfo.lowNowPrice;
       Product.id = this.id;
-      console.log(Product);
       // 2.添加到vuex
-      this.$store.dispatch("addShopCart", Product);
+      this.addCart(Product).then((msg) => {
+        this.$toast.success(msg, 2500);
+      });
     },
   },
 };
@@ -162,7 +168,7 @@ export default {
 <style scoped>
 #detail {
   position: relative;
-  z-index: 20000;
+  z-index: 2000;
   height: 100vh;
   background: #fff;
 }
