@@ -27,6 +27,7 @@ export default {
   methods: {
     click() {
       this.$store.commit("clickName", this.item.title);
+      this.$bus.$emit("getAcm", this.item.maitKey);
     },
   },
   created() {
