@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/supermall" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/supermall/" : "/",
   configureWebpack: {
     resolve: {
       extensions: ['.js', '.css', '.vue'],
