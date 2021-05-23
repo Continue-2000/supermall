@@ -5,7 +5,7 @@
     </nav-bar>
     <div class="content">
       <left-content :list="leftList" />
-      <right-content />
+      <right-content :item="showitem" />
     </div>
   </div>
 </template>
@@ -21,16 +21,23 @@ export default {
   data() {
     return {
       leftList: [],
+      showitem: {},
     };
   },
   components: { NavBar, LeftContent, RightContent },
   created() {
     this.getCategoryMultidata();
   },
+  mounted() {
+    this.$bus.$on("getShowItem", (item) => {
+      this.showitem = item;
+    });
+  },
   methods: {
     getCategoryMultidata() {
       getCategoryMultidata().then((res) => {
         this.leftList = res.data.category.list;
+        this.showitem = this.leftList[0];
         console.log(res);
       });
     },

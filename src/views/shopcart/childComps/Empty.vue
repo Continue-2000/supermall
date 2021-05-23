@@ -13,7 +13,7 @@ export default {
 <style scoped>
 .empty {
   width: 100%;
-  padding: 150px 10px;
+  padding: 30px 10px;
   text-align: center;
 }
 img {

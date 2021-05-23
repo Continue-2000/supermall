@@ -43,7 +43,6 @@ export default {
   methods: {
     titleClick(index) {
       this.currentIndex = index;
-      console.log(this.currentIndex);
       this.$emit("themeClick", this.currentIndex);
     },
     toback() {

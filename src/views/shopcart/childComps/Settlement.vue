@@ -83,7 +83,7 @@ export default {
     // 2.结算
     accounts() {
       if (this.totalNum == 0) this.$toast.error("你还没有选择宝贝哦", 2500);
-      else this.$toast.error("努力开发中", 2500);
+      else this.$toast.error("抱歉，还在开发中哦", 2500);
     },
   },
 };
@@ -119,7 +119,7 @@ export default {
 }
 .totalPrice {
   flex: 1;
-  margin-left: 100px;
+  margin-left: 60px;
 }
 .toSettle {
   height: 40px;

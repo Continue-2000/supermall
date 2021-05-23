@@ -1,53 +1,129 @@
 <template>
   <div class="right-content">
-    <scroll :probe-type="3" class="content" ref="scroll">
-      <grid-view :cols="4" :lineSpace="15" :v-margin="20" v-if="gridList">
-        <div class="item" v-for="(item, index) in gridList" :key="index">
-          <a :href="item.link">
-            <img class="item-img" :src="item.image" alt="" />
-            <div class="item-text">{{ item.title }}</div>
-          </a>
-        </div>
-      </grid-view>
+    <tab-control
+      :items="['综合', '销量', '新品']"
+      @tabclick="clickindex"
+      ref="tabControl1"
+      v-show="fixed"
+      class="control1"
+    ></tab-control>
+    <scroll
+      :probe-type="3"
+      class="content"
+      ref="scroll"
+      @position="getposition"
+      @loadmore="toloadmore"
+    >
+      <right-grid-view
+        :item="item"
+        @gridImageLoad="gridImageLoad"
+      ></right-grid-view>
+      <tab-control
+        :items="['综合', '销量', '新品']"
+        @tabclick="clickindex"
+        ref="tabControl2"
+      ></tab-control>
+      <goods-list :goods="goodsList" />
     </scroll>
+    <back-top @click.native="back2top" v-show="isback"></back-top>
   </div>
 </template>
 <script>
 // 公用组件
 import Scroll from "components/common/scroll/Scroll";
+import TabControl from "components/content/tabControl/TabControl";
+import GoodsList from "components/content/goods/GoodsList";
+import { BackTopMixin } from "common/mixin";
+// 子组件
+import RightGridView from "./RightGridView";
 
-import { getSubcategory } from "network/category";
-import GridView from "components/common/gridview/GridView";
+import { getCategoryDetail } from "network/category";
 export default {
   name: "RightContent",
+  props: {
+    item: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
-      gridList: [],
+      currentitem: "pop",
+      goodsList: [],
+      fixed: false,
+      tabControlTop: 0,
     };
   },
-  components: { Scroll, GridView },
-  // 进入时正在流行
+  components: { Scroll, TabControl, GoodsList, RightGridView },
+  mixins: [BackTopMixin],
   created() {
-    getSubcategory(3627).then((res) => {
-      console.log(res);
-      this.gridList = res.data.list;
-    });
+    setTimeout(() => {
+      this.clickindex(0);
+    }, 1000);
   },
-  mounted() {
-    this.$bus.$on("getAcm", (maitKey) => {
-      getSubcategory(maitKey).then((res) => {
-        console.log(res);
-        this.gridList = res.data.list;
+  computed: {
+    miniWallkey() {
+      return this.item.miniWallkey;
+    },
+  },
+  // 进入时正在流行
+  methods: {
+    gridImageLoad() {
+      this.tabControlTop = this.$refs.tabControl2.$el.offsetTop;
+    },
+    // 事件操作
+    clickindex(index) {
+      switch (index) {
+        case 0:
+          this.currentitem = "pop";
+          break;
+        case 1:
+          this.currentitem = "new";
+          break;
+        case 2:
+          this.currentitem = "sell";
+          break;
+      }
+
+      this.getCategoryDetail();
+      this.$refs.tabControl1.activeitem = index;
+      this.$refs.tabControl2.activeitem = index;
+    },
+    // 获取详细信息
+    getCategoryDetail() {
+      getCategoryDetail(this.miniWallkey, this.currentitem).then((res) => {
+        this.goodsList = res;
       });
-    });
+    },
+    // 加载更多
+    toloadmore() {
+      this.getCategoryDetail();
+      this.$refs.scroll.finishPullUp();
+    },
+    //得到滑动位置
+    getposition(position) {
+      position = -position.y;
+      // this.position = position;
+      // 判断是否出现返回置顶按钮
+      this.isShowBackTop(position);
+      // 判断是否停留tabcontrol
+      this.fixed = position > this.tabControlTop;
+    },
   },
-  methods: {},
+  watch: {
+    item() {
+      this.getCategoryDetail();
+    },
+  },
 };
 </script>
 <style scoped>
 .right-content {
   position: relative;
-  flex: 3;
+  transform: scale(1);
+  flex: 2.4;
 }
 .content {
   position: absolute;
@@ -56,17 +132,13 @@ export default {
   right: 0;
   bottom: 0;
 }
-.panel img {
-  width: 100%;
-}
-.item {
-  text-align: center;
-  font-size: 12px;
-}
-.item-img {
-  width: 80%;
-}
-.item-text {
-  margin-top: 15px;
+.control1 {
+  position: fixed;
+  width: calc(100%);
+  left: 0;
+  top: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
 }
 </style>

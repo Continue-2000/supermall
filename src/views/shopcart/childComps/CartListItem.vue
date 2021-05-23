@@ -1,9 +1,20 @@
 <template>
   <div class="cart-list-item">
+    <div class="control-part" v-if="isShowControl">
+      <div class="control-item"><div class="btn">移入收藏</div></div>
+      <div class="control-item"><div class="btn">看相似</div></div>
+      <div class="control-item">
+        <div class="btn" @click="deletecart">删除</div>
+      </div>
+    </div>
     <div class="select">
       <check-button class="check-button" :ischeck="cart.checked" :cart="cart" />
     </div>
-    <div class="desc" @click="toDetail">
+    <div
+      class="desc"
+      @touchstart="touchstart"
+      @touchend.stop.prevent="touchend"
+    >
       <div class="image">
         <div class="img">
           <img :src="cart.img" alt="产品图片" />
@@ -23,6 +34,7 @@
 </template>
 <script>
 import CheckButton from "components/content/checkButton/CheckButton";
+import functions from "common/functions";
 export default {
   name: "CartListItem",
   props: {
@@ -33,9 +45,47 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      timeout: null,
+      islong: false,
+      isShowControl: false,
+    };
+  },
+  mounted() {
+    let that = this;
+    document.getElementById("app").onclick = function (e) {
+      console.log(e);
+      that.num += 1;
+      if (
+        e.target.className === "control-item" ||
+        e.target.className === "control-part"
+      )
+        console.log(1);
+      else {
+        that.isShowControl = false;
+      }
+    };
+  },
   methods: {
-    toDetail() {
-      this.$router.push("/detail/" + this.cart.id);
+    touchend() {
+      console.log("ended");
+      clearTimeout(this.timeout);
+      if (!this.islong) {
+        this.$router.push("/detail/" + this.cart.id);
+      }
+      this.islong = false;
+    },
+    touchstart() {
+      clearTimeout(this.timeout); //防止重新注册
+      this.timeout = setTimeout(() => {
+        this.islong = true;
+        this.isShowControl = true;
+      }, 600);
+    },
+    deletecart() {
+      this.$store.commit("deletecart", this.cart);
+      this.$toast.success("删除成功", 2500);
     },
   },
   components: {
@@ -47,7 +97,7 @@ export default {
 .cart-list-item {
   display: flex;
   position: relative;
-  padding: 10px 10px 10px 0;
+  padding: 10px 20px 10px 0;
   width: 100%;
   height: 150px;
   border-bottom: 2px solid #eee;
@@ -121,5 +171,67 @@ export default {
   float: right;
   margin-right: 30px;
   color: #333;
+}
+
+.control-part {
+  display: flex;
+  position: absolute;
+  padding: 10px 20px;
+  left: 0;
+  right: 0;
+  top: 20%;
+  height: 70%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.control-item {
+  flex: 1;
+  position: relative;
+}
+.control-item .btn {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  line-height: 70px;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  color: #fff;
+}
+.control-item:nth-of-type(1) .btn {
+  background-image: -webkit-gradient(
+    radial,
+    center center,
+    0,
+    center center,
+    220,
+    from(orange),
+    to(red)
+  );
+}
+.control-item:nth-of-type(2) .btn {
+  background-image: -webkit-gradient(
+    radial,
+    center center,
+    0,
+    center center,
+    220,
+    from(rgb(58, 223, 126)),
+    to(red)
+  );
+}
+.control-item:nth-of-type(3) .btn {
+  background-image: -webkit-gradient(
+    radial,
+    center center,
+    0,
+    center center,
+    220,
+    from(rgb(226, 42, 97)),
+    to(red)
+  );
 }
 </style>

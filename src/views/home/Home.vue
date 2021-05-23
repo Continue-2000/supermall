@@ -44,10 +44,9 @@ import GoodsList from "components/content/goods/GoodsList";
 
 // 3.common
 // utils
-import { debounce } from "common/utils";
 import { getHomeMultidata, getHomeGoods } from "network/home";
 //mixin
-import { BackTopMixin } from "common/mixin";
+import { BackTopMixin, RefeshScrollHeight } from "common/mixin";
 export default {
   name: "Home",
   data() {
@@ -76,14 +75,7 @@ export default {
     this.getHomeGoods("sell");
     // console.log(this.goods.pop.list);
   },
-  mixins: [BackTopMixin],
-  mounted() {
-    // 图片加载完成,更新scrollHeight
-    const fn = debounce(this.$refs.scroll.refresh, 300);
-    this.$bus.$on("imageHaveLoad", () => {
-      fn();
-    });
-  },
+  mixins: [BackTopMixin, RefeshScrollHeight],
   methods: {
     // 事件操作
     clickindex(index) {

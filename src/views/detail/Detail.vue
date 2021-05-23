@@ -19,7 +19,8 @@
       <goods-list :goods="recommend" ref="recommend" />
     </scroll>
     <detail-buttom-bar @addShopCart="addShopCart"></detail-buttom-bar>
-    <back-top @click.native="back2top" v-show="isback"></back-top>
+    <jump-btn :destination="destination" v-show="cartLength" />
+    <back-top @click.native="back2top" v-show="isback" />
   </div>
 </template>
 <script>
@@ -37,9 +38,9 @@ import DetailButtomBar from "./childComps/DetailButtomBar";
 import Scroll from "components/common/scroll/Scroll";
 import { debounce } from "common/utils";
 import { BackTopMixin } from "common/mixin";
-
+import JumpBtn from "components/common/jumpbtn/JumpBtn";
 // 映射
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // 网络请求
 import {
   getDetail,
@@ -63,6 +64,7 @@ export default {
       recommend: [],
       themeTopYs: [],
       ScrollIndex: 0,
+      destination: "shopcart",
     };
   },
   components: {
@@ -76,6 +78,12 @@ export default {
     Scroll,
     GoodsList,
     DetailButtomBar,
+    JumpBtn,
+  },
+  computed: {
+    ...mapGetters({
+      cartLength: "cartLength",
+    }),
   },
   created() {
     // 获取id

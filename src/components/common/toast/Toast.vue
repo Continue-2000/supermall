@@ -56,4 +56,8 @@ export default {
 img {
   width: 50px;
 }
+.delete {
+  width: 100%;
+  font-size: 22px;
+}
 </style>

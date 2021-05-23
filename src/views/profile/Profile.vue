@@ -9,7 +9,7 @@
       </div>
       <div class="header-info">
         <div class="header-left">
-          <div class="login-register">登录/注册</div>
+          <div class="login-register" @click="develop">登录/注册</div>
           <div class="phone">
             <img
               src="~assets/img/profile/phone.svg"
@@ -22,46 +22,46 @@
       </div>
     </div>
     <div class="mydata">
-      <div class="mydata-item">
+      <div class="mydata-item" @click="develop">
         <span><span class="number">0.00</span>元</span>
         <span class="title">我的余额</span>
       </div>
-      <div class="mydata-item">
+      <div class="mydata-item" @click="develop">
         <span><span class="number">0</span>个</span>
         <span class="title">我的优惠</span>
       </div>
-      <div class="mydata-item">
+      <div class="mydata-item" @click="develop">
         <span><span class="number">0</span>分</span>
         <span class="title">我的积分</span>
       </div>
     </div>
     <div class="other">
-      <div class="other-item">
+      <div class="other-item" @click="develop">
         <img src="~assets/img/profile/collection.svg" alt="" />
         <span>收藏</span>
         <span>8</span>
       </div>
-      <div class="other-item">
+      <div class="other-item" @click="develop">
         <img src="~assets/img/profile/subscribe.svg" alt="" />
         <span>订阅店铺</span>
         <span>6</span>
       </div>
-      <div class="other-item">
+      <div class="other-item" @click="develop">
         <img src="~assets/img/profile/footprint.svg" alt="" />
         <span>足迹</span>
         <span>100</span>
       </div>
     </div>
     <div class="bottom">
-      <div class="bottom-item">
+      <div class="bottom-item" @click="develop">
         <img src="~assets/img/profile/message.svg" alt="" />
         <span>我的消息</span>
       </div>
-      <div class="bottom-item">
+      <div class="bottom-item" @click="develop">
         <img src="~assets/img/profile/pointer.svg" alt="" />
         <span>积分商城</span>
       </div>
-      <div class="bottom-item">
+      <div class="bottom-item" @click="develop">
         <img src="~assets/img/profile/vip.svg" alt="" />
         <span>会员卡</span>
       </div>
@@ -69,7 +69,7 @@
         <img src="~assets/img/profile/cart.svg" alt="" />
         <span>我的购物车</span>
       </div>
-      <div class="bottom-item">
+      <div class="bottom-item" @click="develop">
         <img src="~assets/img/profile/shopping.svg" alt="" />
         <span>下载购物APP</span>
       </div>
@@ -85,6 +85,9 @@ export default {
   methods: {
     toMyCart() {
       this.$router.push("/shopcart");
+    },
+    develop() {
+      this.$toast.error("抱歉，还在开发中哦...");
     },
   },
 };

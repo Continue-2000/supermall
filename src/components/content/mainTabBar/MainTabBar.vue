@@ -18,7 +18,7 @@
       />
       <div slot="tabtext">分类</div>
     </tab-bar-item>
-    <tab-bar-item path="/shopcart" fontcolor="red">
+    <tab-bar-item path="/shopcart" fontcolor="red" type="shopcart">
       <img slot="tab_img" src="~assets/img/tabbar/shopcart.svg" alt="" />
       <img
         slot="tab_active_img"

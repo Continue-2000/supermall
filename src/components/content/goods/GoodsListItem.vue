@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     showImg() {
-      return this.good.image || this.good.show.img;
+      return this.good.image || this.good.img || this.good.show.img;
     },
   },
   methods: {
@@ -31,8 +31,11 @@ export default {
     },
     getDetail() {
       let goid;
-      if (this.$route.path.includes("/home")) goid = this.good.iid;
-      else if (this.$route.path.includes("/detail")) goid = this.good.shop_id;
+      // if (this.$route.path.includes("/detail")) goid = this.good.shop_id;
+      // else {
+      //   goid = this.good.iid;
+      // }
+      goid = this.good.iid || this.good.item_id;
       console.log(goid);
       // this.$router.push("/detail/" + goid);
       this.$router.push("/detail/" + goid);

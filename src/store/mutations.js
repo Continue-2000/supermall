@@ -1,4 +1,4 @@
-import { ADD_COUNT, PUSH_PROJECT, IS_CHECK, CLICK_NAME } from "./mutations_const"
+import { ADD_COUNT, PUSH_PROJECT, IS_CHECK, CLICK_NAME, DELETE_CART } from "./mutations_const"
 export default {
   [ADD_COUNT](state, payload) {
     payload.count += 1;
@@ -12,5 +12,10 @@ export default {
   },
   [CLICK_NAME](state, name) {
     state.clickname = name
+  },
+  [DELETE_CART](state, obj) {
+    let index = state.shopcart.indexOf(obj)
+    console.log(index);
+    state.shopcart.splice(index, 1)
   }
 }
