@@ -1,8 +1,12 @@
 <template>
   <div class="cart-list-item">
     <div class="control-part" v-if="isShowControl">
-      <div class="control-item"><div class="btn">移入收藏</div></div>
-      <div class="control-item"><div class="btn">看相似</div></div>
+      <div class="control-item">
+        <div class="btn" @click="develop">移入收藏</div>
+      </div>
+      <div class="control-item">
+        <div class="btn" @click="develop">看相似</div>
+      </div>
       <div class="control-item">
         <div class="btn" @click="deletecart">删除</div>
       </div>
@@ -86,6 +90,9 @@ export default {
     deletecart() {
       this.$store.commit("deletecart", this.cart);
       this.$toast.success("删除成功", 2500);
+    },
+    develop() {
+      this.$toast.error("抱歉，还在开发中哦");
     },
   },
   components: {
