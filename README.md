@@ -1,5 +1,5 @@
 
-# 🔍supermall (不定时更新...)
+# 🔍supermall 
 
 ## Project setup
 ```
